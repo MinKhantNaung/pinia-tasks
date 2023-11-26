@@ -27,3 +27,4 @@ npm run dev
 ```sh
 npm run build
 ```
+# Let's learn pinia with mini project !
