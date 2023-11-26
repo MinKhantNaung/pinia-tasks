@@ -5,12 +5,12 @@ export const useTaskStore = defineStore('taskStore', () => {
     const tasks = ref([
         {
             id: 1,
-            title: 'Meet with her !',
+            title: 'Go to Ocean !',
             isFav: true
         }, 
         {
             id: 2,
-            title: 'Be my love !',
+            title: 'Eat Chicken Noddle Soup !',
             isFav: true
         }
     ])
