@@ -5,7 +5,7 @@
             <button @click="taskStore.deleteTask(task.id)">
                 <i class="fa-solid fa-trash" style="cursor: pointer;"></i>
             </button> &nbsp;
-            <button @click="taskStore.toggleFav(task.id)" :class="{'text-info': task.isFav}">
+            <button @click="taskStore.toggleFav(task.id)" :class="{'text-danger': task.isFav}">
                 <i class="fa-solid fa-heart" style="cursor: pointer;"></i>
             </button>
         </span>

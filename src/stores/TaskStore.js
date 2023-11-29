@@ -3,18 +3,7 @@ import { computed, ref } from "vue";
 
 export const useTaskStore = defineStore('taskStore', () => {
     // state
-    const tasks = ref([
-        {
-            id: 1,
-            title: 'Go to Ocean !',
-            isFav: false
-        },
-        {
-            id: 2,
-            title: 'Eat Chicken Noddle Soup !',
-            isFav: true
-        }
-    ])
+    const tasks = ref([])
 
     // getters
     const favTasks = computed(() => {
@@ -30,6 +19,12 @@ export const useTaskStore = defineStore('taskStore', () => {
     })
 
     // actions
+    function getTasks() {
+        fetch('http://localhost:3000/tasks')
+        .then(response => response.json())
+        .then(response => tasks.value = response)
+    }
+
     function addTask(task) {
         tasks.value.push(task)
     }
@@ -47,14 +42,21 @@ export const useTaskStore = defineStore('taskStore', () => {
         task.isFav = !task.isFav
     }
 
+    // reseting state setup store
+    function $reset() {
+        tasks.value = []
+    }
+
     // set up pinia syntax is like composable, don't forget to return
     return {
         tasks,
         favTasks,
         favTasksCount,
         totalTasks,
+        getTasks,
         addTask,
         deleteTask,
-        toggleFav
+        toggleFav,
+        $reset,
     }
 })

@@ -3,11 +3,18 @@ import { RouterLink, RouterView } from 'vue-router'
 import { useTaskStore } from './stores/TaskStore'
 import TaskDetails from './components/TaskDetails.vue';
 import TaskForm from './components/TaskForm.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { storeToRefs } from 'pinia';
 
 const taskStore = useTaskStore()
 
+const { totalTasks, tasks, favTasksCount, favTasks } = storeToRefs(taskStore)
+
 const filterStatus = ref('all')
+
+onMounted(() => {
+  taskStore.getTasks()
+})
 </script>
 
 <template>
@@ -38,19 +45,21 @@ const filterStatus = ref('all')
         </ul>
 
         <div v-if="filterStatus === 'all'">
-          <p class="text-secondary py-2">You have {{ taskStore.totalTasks }} tasks left to do !</p>
-          <div v-for="task in taskStore.tasks" :key="task.id">
+          <p class="text-secondary py-2">You have {{ totalTasks }} tasks left to do !</p>
+          <div v-for="task in tasks" :key="task.id">
             <TaskDetails :task="task" />
           </div>
         </div>
 
         <div v-else>
-          <p class="text-secondary py-2">You have {{ taskStore.favTasksCount }} tasks left to do !</p>
-          <div v-for="task in taskStore.favTasks" :key="task.id">
+          <p class="text-secondary py-2">You have {{ favTasksCount }} tasks left to do !</p>
+          <div v-for="task in favTasks" :key="task.id">
             <TaskDetails :task="task" />
           </div>
         </div>
       </div>
+
+      <button type="button" @click.prevent="taskStore.$reset">Reset State</button>
     </div>
   </div>
 </template>
